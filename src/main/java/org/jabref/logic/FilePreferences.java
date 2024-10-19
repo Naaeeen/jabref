@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import org.jabref.logic.filenameformatpattern.GlobalFilenamePattern;
 import org.jabref.model.strings.StringUtil;
 
 /**
@@ -22,7 +23,7 @@ public class FilePreferences {
     private final StringProperty userAndHost = new SimpleStringProperty();
     private final SimpleStringProperty mainFileDirectory = new SimpleStringProperty();
     private final BooleanProperty storeFilesRelativeToBibFile = new SimpleBooleanProperty();
-    private final StringProperty fileNamePattern = new SimpleStringProperty();
+    private final ObjectProperty<GlobalFilenamePattern> fileNamePattern = new SimpleObjectProperty<>();
     private final StringProperty fileDirectoryPattern = new SimpleStringProperty();
     private final BooleanProperty downloadLinkedFiles = new SimpleBooleanProperty();
     private final BooleanProperty fulltextIndexLinkedFiles = new SimpleBooleanProperty();
@@ -36,7 +37,7 @@ public class FilePreferences {
     public FilePreferences(String userAndHost,
                            String mainFileDirectory,
                            boolean storeFilesRelativeToBibFile,
-                           String fileNamePattern,
+                           GlobalFilenamePattern fileNamePattern,
                            String fileDirectoryPattern,
                            boolean downloadLinkedFiles,
                            boolean fulltextIndexLinkedFiles,
@@ -49,7 +50,7 @@ public class FilePreferences {
         this.userAndHost.setValue(userAndHost);
         this.mainFileDirectory.setValue(mainFileDirectory);
         this.storeFilesRelativeToBibFile.setValue(storeFilesRelativeToBibFile);
-        this.fileNamePattern.setValue(fileNamePattern);
+        this.fileNamePattern.set(fileNamePattern);
         this.fileDirectoryPattern.setValue(fileDirectoryPattern);
         this.downloadLinkedFiles.setValue(downloadLinkedFiles);
         this.fulltextIndexLinkedFiles.setValue(fulltextIndexLinkedFiles);
@@ -98,14 +99,14 @@ public class FilePreferences {
     }
 
     public String getFileNamePattern() {
-        return fileNamePattern.get();
+        return fileNamePattern.get().toString();
     }
 
-    public StringProperty fileNamePatternProperty() {
+    public ObjectProperty<GlobalFilenamePattern> fileNamePatternProperty() {
         return fileNamePattern;
     }
 
-    public void setFileNamePattern(String fileNamePattern) {
+    public void setFileNamePattern(GlobalFilenamePattern fileNamePattern) {
         this.fileNamePattern.set(fileNamePattern);
     }
 
@@ -215,5 +216,13 @@ public class FilePreferences {
 
     public void setKeepDownloadUrl(boolean shouldKeepDownloadUrl) {
         this.shouldKeepDownloadUrl.set(shouldKeepDownloadUrl);
+    }
+
+    public GlobalFilenamePattern getFilePattern() {
+        return fileNamePattern.get();
+    }
+
+    public String getDefaultFilenamePatterns() {
+        return DEFAULT_FILENAME_PATTERNS[1];
     }
 }

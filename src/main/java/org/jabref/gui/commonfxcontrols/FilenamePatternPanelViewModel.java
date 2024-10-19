@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 
 import org.jabref.logic.FilePreferences;
-import org.jabref.logic.filenameformatpatterns.FilenameFormatPattern;
+import org.jabref.logic.filenameformatpattern.FilenameFormatPattern;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.model.entry.BibEntryType;
 import org.jabref.model.entry.types.EntryType;
@@ -45,7 +45,7 @@ public class FilenamePatternPanelViewModel {
 
     public void setValues(Collection<BibEntryType> entryTypeList, org.jabref.logic.filenameformatpattern.AbstractFilenameFormatPatterns initialKeyPattern) {
         String defaultPattern;
-        if ((initialKeyPattern.getDefaultValue() == null) || initialKeyPattern.getDefaultValue().equals(FilenameFormatPattern.NULL_CITATION_KEY_PATTERN)) {
+        if ((initialKeyPattern.getDefaultValue() == null) || initialKeyPattern.getDefaultValue().equals(FilenameFormatPattern.NULL_FILENAME_FORMAT_PATTERN)) {
             defaultPattern = "";
         } else {
             defaultPattern = initialKeyPattern.getDefaultValue().stringRepresentation();
@@ -74,7 +74,7 @@ public class FilenamePatternPanelViewModel {
 
     public void resetAll() {
         patternListProperty.forEach(item -> item.setPattern(""));
-        defaultItemProperty.getValue().setPattern(filePreferences.getFileNamePattern());
+        defaultItemProperty.getValue().setPattern(filePreferences.getDefaultFilenamePatterns());
     }
 
     public ListProperty<FilenamePatternItemModel> patternListProperty() {

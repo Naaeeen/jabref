@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 
 import org.jabref.gui.actions.ActionFactory;
 import org.jabref.gui.actions.StandardActions;
-//import org.jabref.gui.commonfxcontrols.CitationKeyPatternsPanel;
 import org.jabref.gui.commonfxcontrols.FilenamePatternPanel;
 import org.jabref.gui.desktop.os.NativeDesktop;
 import org.jabref.gui.help.HelpAction;
@@ -40,7 +39,7 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
     @FXML private CheckBox fulltextIndex;
 
 //    @FXML private ComboBox<String> fileNamePattern;
-    @FXML private FilenamePatternPanel bibtexKeyPatternTable;
+    @FXML private FilenamePatternPanel filenamePatternPanel;
 
 
     @FXML private TextField fileDirectoryPattern;
@@ -82,8 +81,8 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
 
 //        fileNamePattern.valueProperty().bindBidirectional(viewModel.fileNamePatternProperty());
 //        fileNamePattern.itemsProperty().bind(viewModel.defaultFileNamePatternsProperty());
-        bibtexKeyPatternTable.patternListProperty().bindBidirectional(viewModel.patternListProperty());
-        bibtexKeyPatternTable.defaultKeyPatternProperty().bindBidirectional(viewModel.defaultKeyPatternProperty());
+        filenamePatternPanel.patternListProperty().bindBidirectional(viewModel.patternListProperty());
+        filenamePatternPanel.defaultKeyPatternProperty().bindBidirectional(viewModel.defaultKeyPatternProperty());
 
         fileDirectoryPattern.textProperty().bindBidirectional(viewModel.fileDirectoryPatternProperty());
         confirmLinkedFileDelete.selectedProperty().bindBidirectional(viewModel.confirmLinkedFileDeleteProperty());
@@ -104,9 +103,9 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
     public void setValues() {
         viewModel.setValues();
         BibEntryTypesManager entryTypesManager = Injector.instantiateModelOrService(BibEntryTypesManager.class);
-        bibtexKeyPatternTable.setValues(
+        filenamePatternPanel.setValues(
                 entryTypesManager.getAllTypes(preferences.getLibraryPreferences().getDefaultBibDatabaseMode()),
-                preferences.getFilePreferences().getKeyPatterns());
+                preferences.getFilePreferences().getFilePattern());
     }
 
     @Override
@@ -115,7 +114,7 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
     }
 
     @FXML
-    public void resetAllKeyPatterns() {
-        bibtexKeyPatternTable.resetAll();
+    public void resetAllFileNamePatterns() {
+        filenamePatternPanel.resetAll();
     }
 }

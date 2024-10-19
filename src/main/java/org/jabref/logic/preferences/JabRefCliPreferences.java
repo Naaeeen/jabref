@@ -50,6 +50,7 @@ import org.jabref.logic.exporter.ExportPreferences;
 import org.jabref.logic.exporter.MetaDataSerializer;
 import org.jabref.logic.exporter.SelfContainedSaveConfiguration;
 import org.jabref.logic.exporter.TemplateExporter;
+import org.jabref.logic.filenameformatpattern.GlobalFilenamePattern;
 import org.jabref.logic.importer.ImportFormatPreferences;
 import org.jabref.logic.importer.ImporterPreferences;
 import org.jabref.logic.importer.fetcher.ACMPortalFetcher;
@@ -1520,7 +1521,7 @@ public class JabRefCliPreferences implements CliPreferences {
                 getInternalPreferences().getUserAndHost(),
                 getPath(MAIN_FILE_DIRECTORY, getDefaultPath()).toString(),
                 getBoolean(STORE_RELATIVE_TO_BIB),
-                get(IMPORT_FILENAMEPATTERN),
+                GlobalFilenamePattern.fromPattern(get(IMPORT_FILENAMEPATTERN)),
                 get(IMPORT_FILEDIRPATTERN),
                 getBoolean(DOWNLOAD_LINKED_FILES),
                 getBoolean(FULLTEXT_INDEX_LINKED_FILES),
@@ -1536,7 +1537,7 @@ public class JabRefCliPreferences implements CliPreferences {
         EasyBind.listen(getInternalPreferences().getUserAndHostProperty(), (obs, oldValue, newValue) -> filePreferences.getUserAndHostProperty().setValue(newValue));
         EasyBind.listen(filePreferences.mainFileDirectoryProperty(), (obs, oldValue, newValue) -> put(MAIN_FILE_DIRECTORY, newValue));
         EasyBind.listen(filePreferences.storeFilesRelativeToBibFileProperty(), (obs, oldValue, newValue) -> putBoolean(STORE_RELATIVE_TO_BIB, newValue));
-        EasyBind.listen(filePreferences.fileNamePatternProperty(), (obs, oldValue, newValue) -> put(IMPORT_FILENAMEPATTERN, newValue));
+        EasyBind.listen(filePreferences.fileNamePatternProperty(), (obs, oldValue, newValue) -> put(IMPORT_FILENAMEPATTERN, newValue.toString()));
         EasyBind.listen(filePreferences.fileDirectoryPatternProperty(), (obs, oldValue, newValue) -> put(IMPORT_FILEDIRPATTERN, newValue));
         EasyBind.listen(filePreferences.downloadLinkedFilesProperty(), (obs, oldValue, newValue) -> putBoolean(DOWNLOAD_LINKED_FILES, newValue));
         EasyBind.listen(filePreferences.fulltextIndexLinkedFilesProperty(), (obs, oldValue, newValue) -> putBoolean(FULLTEXT_INDEX_LINKED_FILES, newValue));

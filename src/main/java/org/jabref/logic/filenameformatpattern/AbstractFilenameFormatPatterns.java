@@ -14,12 +14,12 @@ import org.jabref.model.entry.types.EntryType;
  */
 public abstract class AbstractFilenameFormatPatterns {
 
-    protected FilenameFormat defaultPattern = FilenameFormat.NULL_FILENAME_FORMAT_PATTERN;
+    protected FilenameFormatPattern defaultPattern = FilenameFormatPattern.NULL_FILENAME_FORMAT_PATTERN;
 
-    protected Map<EntryType, FilenameFormat> data = new HashMap<>();
+    protected Map<EntryType, FilenameFormatPattern> data = new HashMap<>();
 
     public void addFilenameFormatPattern(EntryType type, String pattern) {
-        data.put(type, new FilenameFormat(pattern));
+        data.put(type, new FilenameFormatPattern(pattern));
     }
 
     @Override
@@ -57,11 +57,11 @@ public abstract class AbstractFilenameFormatPatterns {
      * @param entryType a <code>EntryType</code>
      * @return the FilenameFormat for the given key.
      */
-    public FilenameFormat getValue(EntryType entryType) {
-        FilenameFormat result = data.get(entryType);
+    public FilenameFormatPattern getValue(EntryType entryType) {
+        FilenameFormatPattern result = data.get(entryType);
         if (result == null) {
             result = getDefaultValue();
-            if (result == null || FilenameFormat.NULL_FILENAME_FORMAT_PATTERN.equals(result)) {
+            if (result == null || FilenameFormatPattern.NULL_FILENAME_FORMAT_PATTERN.equals(result)) {
                 return getLastLevelFilenameFormatPattern(entryType);
             }
         }
@@ -80,27 +80,27 @@ public abstract class AbstractFilenameFormatPatterns {
      *
      * @return null if not available.
      */
-    public FilenameFormat getDefaultValue() {
+    public FilenameFormatPattern getDefaultValue() {
         return this.defaultPattern;
     }
 
     /**
-     * Sets the DEFAULT PATTERN for this key pattern
+     * Sets the DEFAULT PATTERN for this file format pattern
      *
      * @param filenamePattern the pattern to store
      */
     public void setDefaultValue(String filenamePattern) {
         Objects.requireNonNull(filenamePattern);
-        this.defaultPattern = new FilenameFormat(filenamePattern);
+        this.defaultPattern = new FilenameFormatPattern(filenamePattern);
     }
 
     public Set<EntryType> getAllKeys() {
         return data.keySet();
     }
 
-    public Map<EntryType, FilenameFormat> getPatterns() {
+    public Map<EntryType, FilenameFormatPattern> getPatterns() {
         return data.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public abstract FilenameFormat getLastLevelFilenameFormatPattern(EntryType key);
+    public abstract FilenameFormatPattern getLastLevelFilenameFormatPattern(EntryType key);
 }
